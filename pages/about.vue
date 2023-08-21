@@ -1,23 +1,31 @@
 <template>
-    <div >
-        <img :src="picture" :width="size" :height="size">
-        <p>ชื่อ : {{ firstname }}</p>
-        <p>นามสกุล : {{ lastname }}</p>
-        <p>ชื่อเล่น : {{ nickname }}</p>
+    <div class= "container">
+        <img :src="picture" :width="size" :height="size" style="margin-top: 20px;">
+        <form @submit.prevent="submitForm">
+            กรอกชื่อเล่น <input type="text" ref="nicknameEl">
+            <input type="submit" value="บันทึก" style="margin-top: 20px;">
+        </form>
+        <p>ชื่อ - นามสกุล : {{ getFullname() }}</p>
         <p>อายุ : {{ age }}</p>
+        <p>ชื่อเล่น : {{ nickname }}</p>
+        <button @click="toggleVisible"> {{ isVisible? "ซ่อน" : "แสดง" }}รายละเอียด</button>
+        <div v-show="isVisible">
         <p>ที่อยู่ : <span v-html="address"></span></p>
         <p v-if="hobby.length ===0">ไม่มีงานอดิเรก</p>
         <div v-else>
             <p>งานอดิเรก :</p>
         <ul>
-            <li v-for="item in hobby">{{ item }}</li>
+            <li v-for="items in hobby">{{ items }}</li>
         </ul>
         </div>
         <p>ข้อมูลพื้นฐาน :</p>
         <ul>
-            <li v-for="(value,key) in general" :key="key">{{ key }} : {{ value }}</li>
+           <li>เพศ : {{ general.gender }}</li>
+           <li>น้ำหนัก : {{ general.weight }}</li>
+           <li>ส่วนสูง : {{ general.height }}</li>
+           <li>โรคประจำตัว : {{ general.status }}</li>
         </ul>
-        <button @click="showData">คลิกเพื่อดูข้อมูล</button>
+        </div>
     </div>
 </template>
 
@@ -27,36 +35,28 @@ export default{
         return{
             firstname:"Yaneesa",
             lastname:"Chaisuwan",
+            nickname:"",
             age: 19,
             address: "<i>Chonburi</i>",
             picture:"https://rms.tatc.ac.th/files/importpicstd/01/66309010007.jpg",
             size:150,
-            hobby: [],
+            hobby: ["ฟังเพลง","เล่นเกม","ดูหนัง"],
             general:{gender:"หญิง",weight:62.5,height:157,status:false},
-            nickname : ''
-        }
+            isVisible: false,
+        };
     },
     methods: {
         getFullname(){
-            return `$(this.firstname) $(this.lastname)` 
+            return (this.firstname) + (this.lastname);
         },
-        showData(){
-            alert(this.firstname)
-        },
-        increment(value){
-            this.age += value
-        },
-        decrement(value){
-            this.age -= value
-        },
-        setNickName(event){
-            this.nickname=event.target.value
+        toggleVisible(){
+            this.isVisible = !this.isVisible
         },
         submitForm(){
-            alert('บันทึกข้อมูลเรียบร้อย')
+            this.nickname = this.$refs.nicknameEl.value
         }
-    }
-}
+    },
+};
 </script>
 <style>
    body{

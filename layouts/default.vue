@@ -24,6 +24,9 @@
         <li class="nav-item">
           <a class="nav-link text-light" href="/previewImage">Preview Image</a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link text-light" href="/product">Product</a>
+        </li>
       </ul>
       <form class="d-flex text-light" role="search">
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
